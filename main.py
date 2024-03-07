@@ -69,11 +69,11 @@ if __name__ == '__main__':
     #Training
     epoch  = 0
     inner_training = 20
-    outer_training = 20
+    outer_training = 5
     for agent in AREA_AGENT.values():
         agent.update_sigma(0.3)
     for agent in LINE_AGENT.values():
-        agent.update_sigma(0.3)
+        agent.update_sigma(0.01)
     for env in LENV.values():
         env.train()
 
@@ -114,7 +114,7 @@ if __name__ == '__main__':
                         new_obs_dict[key] = poly.fit_transform(val.reshape(1,-1))[0]
                 for area,agent in AREA_AGENT.items():
                     agent.update_policy(obs_dict[area],grad_dict[area],reward_dict[area]+penalty_dict[area],\
-                                        new_obs_dict[area],t,1e-3,1e-2)
+                                        new_obs_dict[area],t,1e-4,1e-3)
                 obs_dict = new_obs_dict
         #upper
         for k in range(outer_training):
